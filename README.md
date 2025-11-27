@@ -36,24 +36,22 @@ Sigue estos pasos para ejecutar el trabajo de MapReduce en tu clúster Hadoop:
 Crea un archivo de texto de prueba (ej. `input.txt`) con algún contenido y súbelo al sistema de archivos distribuido (HDFS).
 
 ```bash
-# Crear un archivo de prueba local
-echo "hola mundo hadoop hola java mapreduce" > input.txt
+# Crear un archivo de prueba
+bin/hdfs dfs -put etc/hadoop/*.xml input
 
-# Crear directorio en HDFS (opcional)
+# Crear directorio en HDFS
 hdfs dfs -mkdir -p /user/hadoop/wordcount/input
 
-# Subir el archivo a HDFS
-hdfs dfs -put input.txt /user/hadoop/wordcount/input/
 ```
 
 ### 2. Ejecutar el trabajo (Job)
 Utiliza el comando `hadoop jar` para enviar el trabajo al clúster. Asegúrate de especificar la ruta de entrada y la de salida (la ruta de salida no debe existir previamente).
 
 ```bash
-hadoop jar target/word-count-1.0.jar /user/hadoop/wordcount/input /user/hadoop/wordcount/output
+bin/hadoop jar word-count-1.0.jar input output
 ```
 
-*Nota: La clase principal está configurada en el manifiesto del JAR (`com.maestria.hadoop.WordCount`), por lo que no es estrictamente necesario especificarla en el comando, pero si lo fuera, el comando sería:*
+*Nota: La clase principal está configurada en el manifiesto del JAR (`com.ue.hadoop.WordCount`), por lo que no es estrictamente necesario especificarla en el comando, pero si lo fuera, el comando sería:*
 `hadoop jar target/word-count-1.0.jar com.maestria.hadoop.WordCount /user/hadoop/wordcount/input /user/hadoop/wordcount/output`
 
 ### 3. Verificar los resultados
@@ -61,24 +59,52 @@ Una vez que el trabajo haya finalizado correctamente, puedes verificar la salida
 
 ```bash
 # Listar los archivos de salida
-hdfs dfs -ls /user/hadoop/wordcount/output
+bin/hdfs dfs -ls output
 
-# Ver el contenido del resultado (normalmente part-r-00000)
-hdfs dfs -cat /user/hadoop/wordcount/output/part-r-00000
+# Ver el contenido del resultado (normalmente part-r-00000). Con head solo vemos el principio del archivo
+bin/hdfs dfs -head output/part-r-00000 
 ```
 
 ### Salida esperada
 Para el ejemplo anterior, la salida debería ser similar a:
-```text
-hadoop	1
-hola	2
-java	1
-mapreduce	1
-mundo	1
+```"*"	27
+"AS	10
+"License");	10
+"alice,bob	27
+"clumping"	1
+"full_queue_name"	1
+"priority".	1
+"workflowId"	1
+(ASF)	1
+(as	1
+(or	1
+(root	1
+(the	10
+-->	20
+-1	1
+-1,	1
+0.0	1
+1-MAX_INT.	1
+1.	1
+1.0.	1
+2.0	10
+40	2
+40+20=60	1
+:	2
+<!--	20
+</configuration>	10
+</description>	36
+</name>	2
+</property>	69
+<?xml	9
+<?xml-stylesheet	4
+<configuration>	10
+<description>	33
+
 ```
 
 ## 🧹 Limpieza
 Para volver a ejecutar el trabajo, debes eliminar el directorio de salida en HDFS, ya que Hadoop no sobrescribe directorios existentes por seguridad.
 
 ```bash
-hdfs dfs -rm -r /user/hadoop/wordcount/output
+bin/hdfs dfs -rm -r output

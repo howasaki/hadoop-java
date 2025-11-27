@@ -1,4 +1,4 @@
-package com.maestria.hadoop;
+package com.ue.hadoop;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
