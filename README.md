@@ -33,7 +33,7 @@ Una vez finalizado, se generará el archivo `word-count-1.0.jar` dentro del dire
 Sigue estos pasos para ejecutar el trabajo de MapReduce en tu clúster Hadoop:
 
 ### 1. Preparar los datos de entrada
-Crea un archivo de texto de prueba (ej. `input.txt`) con algún contenido y súbelo al sistema de archivos distribuido (HDFS).
+Crea un archivo de texto de prueba (ej. `input`) con algún contenido y súbelo al sistema de archivos distribuido (HDFS).
 
 ```bash
 # Crear un archivo de prueba
@@ -43,8 +43,22 @@ bin/hdfs dfs -put etc/hadoop/*.xml input
 hdfs dfs -mkdir -p /user/hadoop/wordcount/input
 
 ```
+### 2. Sube el archivo jar al servidor Hadoop
 
-### 2. Ejecutar el trabajo (Job)
+Para subir el archivo jar al cluster de hadoop se puede utilizar un software de gestion de archivos como winscp o ftp client como FileZilla (Buscar en google). Aquí estoy utilizando el comando scp desde la terminal de línea de comandos.
+
+```bash
+scp word-count-1.0.jar ubuntu@<IP>:/home/ubuntu/
+```
+Esto copiará el archivo jar con el usuario ubuntu, sin embargo para poder ejecutarlo desde la sesion del usuario hadoop es necesario cambiar el propietario del archivo, esto se hace con el comando chown. Una vez conectado al server con el usuario ubuntu, ejecutar los siguietes comandos en el directorio donde está el archivo jar para poder disponer del archivo desde la sesión del usuario hadoop.
+
+```bash
+sudo chown hadoop:hadoop word-count-1.0.jar
+sudo mv word-count-1.0.jar /home/hadoop
+sudo su hadoop
+```
+
+### 3. Ejecutar el trabajo (Job)
 Utiliza el comando `hadoop jar` para enviar el trabajo al clúster. Asegúrate de especificar la ruta de entrada y la de salida (la ruta de salida no debe existir previamente).
 
 ```bash
@@ -54,7 +68,7 @@ bin/hadoop jar word-count-1.0.jar input output
 *Nota: La clase principal está configurada en el manifiesto del JAR (`com.ue.hadoop.WordCount`), por lo que no es estrictamente necesario especificarla en el comando, pero si lo fuera, el comando sería:*
 `hadoop jar target/word-count-1.0.jar com.maestria.hadoop.WordCount /user/hadoop/wordcount/input /user/hadoop/wordcount/output`
 
-### 3. Verificar los resultados
+### 4. Verificar los resultados
 Una vez que el trabajo haya finalizado correctamente, puedes verificar la salida generada en HDFS.
 
 ```bash
