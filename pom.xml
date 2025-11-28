@@ -51,11 +51,12 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.maestria.hadoop.WordCount</mainClass>
+                            <mainClass>com.ue.hadoop.WordCount</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
 </project>
