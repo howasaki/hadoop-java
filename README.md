@@ -66,7 +66,7 @@ bin/hadoop jar word-count-1.0.jar input output
 ```
 
 *Nota: La clase principal está configurada en el manifiesto del JAR (`com.ue.hadoop.WordCount`), por lo que no es estrictamente necesario especificarla en el comando, pero si lo fuera, el comando sería:*
-`hadoop jar target/word-count-1.0.jar com.maestria.hadoop.WordCount /user/hadoop/wordcount/input /user/hadoop/wordcount/output`
+`hadoop jar target/word-count-1.0.jar com.ue.hadoop.WordCount /user/hadoop/wordcount/input /user/hadoop/wordcount/output`
 
 ### 4. Verificar los resultados
 Una vez que el trabajo haya finalizado correctamente, puedes verificar la salida generada en HDFS.
