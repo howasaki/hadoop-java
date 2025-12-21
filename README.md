@@ -59,14 +59,24 @@ sudo su hadoop
 ```
 
 ### 3. Ejecutar el trabajo (Job)
-Utiliza el comando `hadoop jar` para enviar el trabajo al clúster. Asegúrate de especificar la ruta de entrada y la de salida (la ruta de salida no debe existir previamente).
+Utiliza el comando `hadoop jar` para enviar el trabajo al clúster. Asegúrate de especificar la aplicación a ejecutar (`wordcount`, `topten`, o `toptenletters`), la ruta de entrada y la de salida (la ruta de salida no debe existir previamente).
 
 ```bash
-bin/hadoop jar word-count-1.0.jar input output
+bin/hadoop jar word-count-1.0.jar <app_name> input output
 ```
 
-*Nota: La clase principal está configurada en el manifiesto del JAR (`com.ue.hadoop.WordCount`), por lo que no es estrictamente necesario especificarla en el comando, pero si lo fuera, el comando sería:*
-`hadoop jar target/word-count-1.0.jar com.ue.hadoop.WordCount /user/hadoop/wordcount/input /user/hadoop/wordcount/output`
+Donde `<app_name>` puede ser una de las siguientes opciones:
+- `wordcount`: para contar la frecuencia de todas las palabras.
+- `topten`: para obtener las diez palabras más frecuentes, excluyendo preposiciones.
+- `toptenletters`: para obtener las diez letras más frecuentes.
+
+Ejemplo:
+```bash
+bin/hadoop jar word-count-1.0.jar topten input output
+```
+
+*Nota: La clase principal está configurada en el manifiesto del JAR (`com.ue.hadoop.MainApp`), por lo que no es estrictamente necesario especificarla en el comando, pero si lo fuera, el comando sería:*
+`hadoop jar target/word-count-1.0.jar com.ue.hadoop.MainApp <app_name> /user/hadoop/wordcount/input /user/hadoop/wordcount/output`
 
 ### 4. Verificar los resultados
 Una vez que el trabajo haya finalizado correctamente, puedes verificar la salida generada en HDFS.

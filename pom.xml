@@ -51,7 +51,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.ue.hadoop.TopTenLettersApp</mainClass>
+                            <mainClass>com.ue.hadoop.MainApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
