@@ -1,4 +1,4 @@
-# Hadoop WordCount Project
+# Hadoop MapReduce MVP
 
 Este proyecto implementa un ejemplo clásico de **MapReduce** para contar la frecuencia de palabras en archivos de texto utilizando el framework Apache Hadoop.
 
